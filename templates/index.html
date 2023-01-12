@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link href='../static/images/stock-icon.png' rel="icon">
+        <title>GoldenCross</title>
+    </head>
+    <body>
+        <img src='../static/images/truefriend.png' style="width: 30%" alt="LOGO">
+        <br>
+        <div class="d-flex container-fluid">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <input class="form-control me-2" style="width: 30%" id="code" type="search" placeholder="종목코드를 입력해주세요.">
+            <button class="btn btn-outline-success" id="search-btn">검색</button>&nbsp;
+            <button class="btn btn-outline-success" id="help-btn">도움말</button>&nbsp;
+            <button class="btn btn-outline-success" id="design-btn">구성도</button>&nbsp;
+        </div>       
+        <script>
+            let whiteList = [];
+            const $input = document.getElementById("code");
+            const $search = document.getElementById("search-btn");
+            const $help = document.getElementById("help-btn");
+            const $design = document.getElementById("design-btn");
+            
+            $help.addEventListener("click",()=>{
+                window.location.href = `/help`;
+            });
+
+            $design.addEventListener("click",()=>{
+                window.location.href = `/design`;
+            });
+
+            $search.addEventListener("click",()=>{
+                goTicker();
+            });
+
+            function goTicker() {
+              const ticker = $input.value;
+              if(!whiteList.includes(ticker)) { 
+                initialInput();
+                alert("존재 하지 않는 Ticker 입니다.");
+                return; 
+              }
+              window.location.href = `/${ticker}`;
+            }
+            function initialInput() {
+                $input.value = '';
+            }
+
+            fetch(`/api`).then(res=>res.json()).then(list=>{whiteList = list});
+            window.addEventListener("pageshow", () => {
+                console.log(list);
+                initialInput();
+            });
+        </script>
+    </body>
+</html>

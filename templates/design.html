@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='../static/images/stock-icon.png' rel="icon">
+    <title>Help</title>
+</head>
+<body>
+    <br>&nbsp;&nbsp;
+    <button class="btn btn-outline-success" id="home-btn"><b>←</b></button>
+    <img src='../static/images/system-design.png' style="width: 80%;" alt="pic">
+    <script>
+        const $home = document.getElementById("home-btn");
+        $home.addEventListener("click",()=>{
+            window.location.href = `/`;
+        });
+    </script>
+</body>
+</html>
