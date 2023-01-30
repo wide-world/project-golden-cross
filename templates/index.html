@@ -27,7 +27,7 @@
             const $search = document.getElementById("search-btn");
             const $help = document.getElementById("help-btn");
             const $design = document.getElementById("design-btn");
-            
+            // const $button = document.querySelector("button.btn");
             $help.addEventListener("click",()=>{
                 window.location.href = `/help`;
             });
@@ -37,27 +37,14 @@
             });
 
             $search.addEventListener("click",()=>{
-                goTicker();
+                const ticker = $input.value;
+                initialInput();
+                window.location.href = `/${ticker}`;
             });
 
-            function goTicker() {
-              const ticker = $input.value;
-              if(!whiteList.includes(ticker)) { 
-                initialInput();
-                alert("존재 하지 않는 Ticker 입니다.");
-                return; 
-              }
-              window.location.href = `/${ticker}`;
-            }
             function initialInput() {
                 $input.value = '';
             }
-
-            fetch(`/api`).then(res=>res.json()).then(list=>{whiteList = list});
-            window.addEventListener("pageshow", () => {
-                console.log(list);
-                initialInput();
-            });
         </script>
     </body>
 </html>

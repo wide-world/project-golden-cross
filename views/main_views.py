@@ -8,7 +8,7 @@ from pykrx import stock
 # Firebase database 인증 및 앱 초기화
 cred = credentials.Certificate('./mykey.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://golden-cross-d33e0-default-rtdb.firebaseio.com/'
+    'databaseURL': 'https://golden-cross-25558-default-rtdb.firebaseio.com/'
 })
 
 bp = Blueprint('main', __name__, url_prefix='/')

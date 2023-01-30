@@ -67,28 +67,14 @@
     });
 
     $search.addEventListener("click",()=>{
-        goTicker();
-    });
-            
-    function goTicker() {
       const ticker = $input.value;
-      if(!whiteList.includes(ticker)) { 
-        initialInput();
-        alert("존재하지 않는 Ticker 입니다.");
-        return;
-      }
+      initialInput();
       window.location.href = `/${ticker}`;
-    }
+    });
     
     function initialInput() {
       $input.value = '';
     }
-    
-    fetch(`/api`).then(res=>res.json()).then(list=>{whiteList = list});
-      window.addEventListener("pageshow", () => {
-      initialInput();
-    });   
-    
     
     am5.ready(function() {
     // Create root element
@@ -113,7 +99,6 @@
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/concepts/formatters/formatting-numbers/
     root.numberFormatter.set("numberFormat", "#,###.00");
-
 
     // Create a main stock panel (chart)
     // -------------------------------------------------------------------------------
@@ -168,14 +153,12 @@
     // https://www.amcharts.com/docs/v5/charts/stock-chart/#Setting_main_series
     stockChart.set("stockSeries", valueSeries);
 
-
     // Add a stock legend
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock-chart/stock-legend/
     var valueLegend = mainPanel.plotContainer.children.push(am5stock.StockLegend.new(root, {
       stockChart: stockChart
     }));
-
 
     // Create volume axis
     // -------------------------------------------------------------------------------
@@ -221,13 +204,11 @@
       return fill;
     })
 
-
     // Set main series
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock-chart/#Setting_main_series
     stockChart.set("volumeSeries", volumeSeries);
     valueLegend.data.setAll([valueSeries, volumeSeries]);
-
 
     // Add cursor(s)
     // -------------------------------------------------------------------------------
@@ -238,7 +219,6 @@
       snapToSeries: [valueSeries],
       snapToSeriesBy: "y!"
     }));
-
 
     // Add scrollbar
     // -------------------------------------------------------------------------------
@@ -334,7 +314,6 @@
       }
     }
 
-
     // Stock toolbar
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock/toolbar/
@@ -361,6 +340,8 @@
         })
       ]
     })
+
+
 
     const pathname = window.location.pathname
     const ticker = pathname.split('/').at(-1)
@@ -399,6 +380,18 @@
         sbSeries.data.setAll(data);
     })
     
+    var tooltip = am5.Tooltip.new(root, {
+      getStrokeFromSprite: false,
+      getFillFromSprite: false
+    });
+
+    tooltip.get("background").setAll({
+      strokeOpacity: 1,
+      stroke: am5.color(0x000000),
+      fillOpacity: 1,
+      fill: am5.color(0xffffff)
+    });
+
     function convert2chartData(data) {
         const value = data
         const timelineDataList = []
@@ -423,20 +416,6 @@
         })
         return result;
     }
-
-
-    var tooltip = am5.Tooltip.new(root, {
-      getStrokeFromSprite: false,
-      getFillFromSprite: false
-    });
-
-    tooltip.get("background").setAll({
-      strokeOpacity: 1,
-      stroke: am5.color(0x000000),
-      fillOpacity: 1,
-      fill: am5.color(0xffffff)
-    });
-
 
     function makeEvent(date, letter, color, description) {
       var dataItem = dateAxis.createAxisRange(dateAxis.makeDataItem({ value: date }))
